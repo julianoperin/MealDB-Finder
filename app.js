@@ -1,8 +1,8 @@
 const search = document.getElementById("search");
 const submit = document.getElementById("submit");
 const random = document.getElementById("random");
-const mealsEl = document.getElementById("meals");
 const resultHeading = document.getElementById("result-heading");
+const mealsEl = document.getElementById("meals");
 const single_mealEl = document.getElementById("single-meal");
 
 // Search Meal and fetch
@@ -25,8 +25,22 @@ function searchMeal(e) {
 
         if (data.meals === null) {
           resultHeading.innerHTML = `<h2> There are no such results. Try again! </h2>`;
+        } else {
+          mealsEl.innerHTML = data.meals
+            .map(
+              (meal) => `
+                <div class="meal">
+                    <img src="${meal.strMealThumb}" alt="${meal.strMeal}" />
+                    <div class="meal-info" data-mealID="${meal.idMeal}"></div>
+                    <h3>${meal.strMeal}</h3>
+                </div>
+            `
+            )
+            .join("");
         }
       });
+    // Clear search text
+    search.value = "";
   } else {
     alert("Please enter a search");
   }
